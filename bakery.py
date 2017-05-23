@@ -1,14 +1,15 @@
 import _thread
+import threading
 import time
-HORAINICIO=time.time()
 DELAY=1 #tiempo que espera en cada seccion
 NT=10  #numero de threads
 CONTINUE=True
 choosing=[False]*NT
 number=[0]*NT
-presentes=[False]*NT
 critical=[False]*NT #se usa para monitorear que threads estan en la seccion critica en un momento dado
 #retorna el numero maximo en el arreglo de numeros
+listapresencia=[]
+listatiempo=[]
 def max_number():
     global choosing
     global number
@@ -46,17 +47,8 @@ def ejecutar_thread(i):
     while(CONTINUE):
         #entra a la seccion critica
         lock(i)
-        #print("Thread "+str(i)+" en seccion critica\n")
         critical[i]=True
-        presentes[i]=True
         print("Thread "+str(i)+" en seccion critica")
-        if(False not in presentes):
-            print("Todos presentes")
-            horafinal=time.time()
-            print("Hora Final: "+str(horafinal))
-            print ("Duracion: "+str(horafinal-HORAINICIO))
-            print ("# de Threads que accedieron a zona critica: "+str(NT))
-            break
         time.sleep(DELAY)
         critical[i]=False
         #sale de la seccion critica
@@ -69,6 +61,7 @@ def ejecutar_thread(i):
 def monitorear():
     tiempo=1
     while(CONTINUE):
+        break
         """
         if(False not in presentes):
             CONTINUE=False
@@ -84,7 +77,6 @@ def monitorear():
         time.sleep(1)
 def bakery():
     CONTINUE=True
-    print("Hora Inicio: "+str(time.time()))
     for i in range(NT):
         _thread.start_new_thread( ejecutar_thread, (i,) )
 bakery()
