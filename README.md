@@ -1,5 +1,5 @@
 # bakery
-<h3>Lamport`s Bakery Algorithm</h3>
+<h3>Lamport's Bakery Algorithm</h3>
 
 <p>Para correrlo se deben escoger los argumentos que se quieren para la ejecucion. Dentro del archivo se deben modificar las variables
 <ul>
